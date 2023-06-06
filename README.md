@@ -4,8 +4,8 @@ This repository contains python scripts that automate the fetal MRI processing p
 
 The pipeline is divided into 2 parts: 
 
-1) The first script performs the steps from masking to automatic segmentation
-2) The second script is for surface and volume extraction. It should be used after doing any manual corrections needed for masking, reconstruction, and segmentation
+1) The first script performs the steps from masking the ROI to automatic segmentationv of the coritcal plates
+2) The second script is for surface and volume extraction. It should be used after performing any manual corrections needed for masking, reconstruction, and segmentation
 
 **Script 1- auto_segmentation**
 
