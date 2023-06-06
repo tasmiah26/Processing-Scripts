@@ -73,8 +73,8 @@ The --help or -h flag will display information about each flag:
 
 Flag         | Description
 ------------ | -------------
-extract | extracts surfaces from segmentation_to31_final.nii. and transforms surfaces to mni and native size. 
-registration or from_registration| performs surface registration to template (29w, 31w, and adult).
+extract | extracts surfaces from segmentation_to31_final.nii. and transforms surfaces to mni and native size
+registration or from_registration| performs surface registration to template (29w, 31w, and adult)
 resample | resample original surface to template and transform the resampled surfaces to 31w template and native space.
 surface_measures | calculates surface area, sulcal depth, and mean curvature. Whole brain measures (l/r area, depth, and absolute mean curvature) will be saved as Area_Depth_aMC.rsl.s5.txt, inside "surfaces" folder
 volume_measures | measures tissue volumes and saves them in Volume_measures.txt, found in "recon_segmentation" folder 
