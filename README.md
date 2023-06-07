@@ -1,6 +1,6 @@
 # Processing-Scripts
 
-This repository contains python scripts that automate the fetal MRI processing pipeline. A detailed manual of the pipeline can be found here: [Manual](https://docs.google.com/document/d/1HlpgPguOVPi5-OvLSErXkho5lGzMlBmZahVWLOd30-M/edit?usp=sharing) 
+This repository contains python scripts that automate the fetal MRI processing pipeline. Detailed information about the pipeline and its steps can be found here: [Manual](https://docs.google.com/document/d/1HlpgPguOVPi5-OvLSErXkho5lGzMlBmZahVWLOd30-M/edit?usp=sharing) 
 
 
 The pipeline is divided into 2 parts: 
