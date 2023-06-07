@@ -1,6 +1,7 @@
 # Processing-Scripts
 
-This repository contains python scripts that automate the fetal MRI processing pipeline. Must be used from within the network...
+This repository contains python scripts that automate the fetal MRI processing pipeline. A detailed manual of the pipeline can be found here: [Manual](https://docs.google.com/document/d/1HlpgPguOVPi5-OvLSErXkho5lGzMlBmZahVWLOd30-M/edit?usp=sharing) 
+
 
 The pipeline is divided into 2 parts: 
 
@@ -23,28 +24,19 @@ This script can be used for initial processing of raw MRI scans using the --all 
 python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_1/auto_segmentation_v2.0.py --input_fol ${file} --all 
 ```
 
---input_fol is a required argument and should be given the path to the folder containing the MRI scans. Either create a variable such as ${file} 
+--input_fol is a required argument and should be given the path to the folder containing the MRI scans, shown as the variable ${file} above. 
 
-Flag options (replace “--all”) for each step to run individually or to start at a particular step and continue: 
-- --masking 
-- --remask, --from_remasking 
-- --NUC, --from_NUC 
-- --QA, --from_QA 
-- --recon, --from_recon 
-- --alignment --from_alignment 
-- --segment 
-
-The --help or -h flag will display information about each flag:
+Flag options (replace “--all”) for each step to run individually or to start at a particular step and continue are in the table below.  The --help or -h flag will display information about each flag:
 
 Flag         | Description
 ------------ | -------------
-masking | creates masks and moves them into a folder labeled "masks" and puts the masked regions inside a folder labeled "brain". Also creates a  "verify" folder to store .png files of the masked ROIs 
-remask or from_remask| use after manual mask correction, to create a new brain folder with corrected regions
-NUC or from_NUC | performs non-uniformity correction and puts them inside a folder "nuc"
-QA or from_QA | creates a folder "Best_Images_Crop" with the highest quality images and quality evaluation is exported to quality_assessment.csv 
-recon or from_recon |  performs 3 reconstructions
-alignment or from_alignment | reorients the reconstructed images inside the alignment_temp/ folder for each temp_recon_#/ directory. Files needed for segmentation and surface extraction steps are created and stored inside temp_recon_#/ (recon* files). 
-segment | performs automatic segmentation
+--masking | creates masks and moves them into a folder labeled "masks" and puts the masked regions inside a folder labeled "brain". Also creates a  "verify" folder to store .png files of the masked ROIs 
+--remask or --from_remask| use after manual mask correction, to create a new brain folder with corrected regions
+--NUC or --from_NUC | performs non-uniformity correction and puts them inside a folder "nuc"
+--QA or --from_QA | creates a folder "Best_Images_Crop" with the highest quality images and quality evaluation is exported to quality_assessment.csv 
+--recon or --from_recon |  performs 3 reconstructions
+--alignment or --from_alignment | reorients the reconstructed images inside the alignment_temp/ folder for each temp_recon_#/ directory. Files needed for segmentation and surface extraction steps are created and stored inside temp_recon_#/ (recon* files). 
+--segment | performs automatic segmentation
 
 
 
