@@ -56,9 +56,9 @@ Flag options (replace “--all”) for each step to run individually or to start
 
 Flag         | Description
 ------------ | -------------
-extract | extracts surfaces from segmentation_to31_final.nii. and transforms surfaces to mni and native size
-registration or from_registration| performs surface registration to template (29w, 31w, and adult)
-resample | resample original surface to template and transform the resampled surfaces to 31w template and native space.
-surface_measures | calculates surface area, sulcal depth, and mean curvature. Whole brain measures (l/r area, depth, and absolute mean curvature) will be saved as Area_Depth_aMC.rsl.s5.txt, inside "surfaces" folder
-volume_measures | measures tissue volumes and saves them in Volume_measures.txt, found in "recon_segmentation" folder 
-gyrification_index | calculates left/right/whole gyrification indices and stores them in  GI_info_final.txt, inside "surfaces" folder
+--extract | extracts surfaces from segmentation_to31_final.nii. and transforms surfaces to mni and native size
+--registration or --from_registration| performs surface registration to template (29w, 31w, and adult)
+--resample | resample original surface to template and transform the resampled surfaces to 31w template and native space.
+--surface_measures | calculates surface area, sulcal depth, and mean curvature. Whole brain measures (l/r area, depth, and absolute mean curvature) will be saved as Area_Depth_aMC.rsl.s5.txt, inside "surfaces" folder
+--volume_measures | measures tissue volumes and saves them in Volume_measures.txt, found in "recon_segmentation" folder 
+--gyrification_index | calculates left/right/whole gyrification indices and stores them in  GI_info_final.txt, inside "surfaces" folder
