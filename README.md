@@ -52,16 +52,7 @@ The path to the file is:
 ``` 
 python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.2.py --input_fol ${file} --all 
 ```
-Flag options (replace “--all”) for each step to run individually or to start at a particular step and continue: 
-- --extract
-- --registration
-- --from_registration
-- --resample	
-- --surface_measures    
-- --volume_measures    
-- --gyrification_index
-
-The --help or -h flag will display information about each flag:
+Flag options (replace “--all”) for each step to run individually or to start at a particular step and continue. The --help or -h flag will display information about each flag:
 
 Flag         | Description
 ------------ | -------------
