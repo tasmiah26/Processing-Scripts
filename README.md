@@ -35,7 +35,7 @@ Flag         | Description
 --NUC or --from_NUC | performs non-uniformity correction and puts them inside a folder "nuc"
 --QA or --from_QA | creates a folder "Best_Images_Crop" with the highest quality images and the quality evaluation is exported to quality_assessment.csv 
 --recon or --from_recon |  performs 3 reconstructions using the top 3 targets with the highest quality scores
---alignment or --from_alignment | reorients the reconstructed images inside the "alignment_temp" folder for each temp_recon_#/ directory. Files necessary for segmentation and surface extraction steps are created and stored inside temp_recon_#/ (recon* files)
+--alignment or --from_alignment | reorients the reconstructed images inside the temp_recon_#/alignment_temp folder. Files necessary for segmentation and surface extraction steps are created and stored inside temp_recon_#/ (recon* files)
 --segment | performs automatic segmentation
 
 
@@ -51,13 +51,13 @@ The path to the file is:
 ``` 
 python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.2.py --input_fol ${file} --all 
 ```
-Flag options (replace “--all”) for each step to run individually or to start at a particular step and continueare shown in the table below. The --help or -h flag will display information about each flag:
+Flag options (replace “--all”) for each step to run individually or to start at a particular step and continue are shown in the table below. The --help or -h flag will display the information about each flag:
 
 Flag         | Description
 ------------ | -------------
 --extract | extracts surfaces from segmentation_to31_final.nii and transforms surfaces to mni and native size
 --registration or --from_registration   | performs surface registration to templates (29w, 31w, and adult)
 --resample | resamples original surface to template, and transforms the resampled surfaces to 31w template and native space
---surface_measures | calculates surface area, sulcal depth, and mean curvature. Whole brain measures (left and right area, depth, and absolute mean curvature) will be saved as Area_Depth_aMC.rsl.s5.txt, inside "surfaces" folder
---volume_measures | measures tissue volumes and saves them in Volume_measures.txt, found in "recon_segmentation" folder 
+--surface_measures | calculates surface area, sulcal depth, and mean curvature. Whole brain measure will be saved as Area_Depth_aMC.rsl.s5.txt (outputs in the following order: left surface area, right surface area, left sulcal depth, right sulcal depth, left absolute mean curvature, and right absolute mean curvature), inside "surfaces" folder
+--volume_measures | measures tissue volumes and saves them in Volume_measures.txt (output order: left inner volume, right inner volume, left CP volume, and right CP volume), found in "recon_segmentation" folder 
 --gyrification_index | calculates left/right/whole gyrification indices and stores them in  GI_info_final.txt, inside "surfaces" folder
