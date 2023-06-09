@@ -2,7 +2,7 @@
 
 #v3.2 - update to surface extraction: subsampling and Taubin smoothing (adapt_object_mesh) added
 
-#surface extraction after segto31_final.nii created manually and recon_#/* (containing seg_to31_final.nii) copied to '+input_fol+'
+#surface extraction after segmentation_to31_final.nii created 
 
 import os
 import sys
@@ -290,15 +290,8 @@ def main():
 		scales=scales.read()
 		os.system('param2xfm -clobber -scales '+scales[16:-1]+' '+input_fol+'/recon_segmentation/recon_native.xfm;')
 
-		# else: 
-		# 	return ('segmentation_to31_final.nii not found in temp_recon_'+r)
-		# else:
-		# 	continue
-
-	# if os.path.exist_ok
 	if extraction == True:
 		extrac()
-		##add checks to see if all necessary output files exist
 		print('surface extraction step complete')
 	if from_reg == True:
 		surf_reg()
@@ -308,24 +301,14 @@ def main():
 		GI()
 	if registration == True:
 		surf_reg()
-		# resampling()
-		# surf_meas()
-		# vol_meas()
-		# GI() 
 	if resample == True:
 		resampling()
-		# surf_meas()
-		# vol_meas()
-		# GI()
 	if S_meas == True:
-		surf_meas()
-		# vol_meas()
-		# GI() 
+		surf_meas() 
 	if V_meas == True:
 		vol_meas()
-		# GI()
+		
 	if gi == True:
-		#if os.path.exist_ok
 		GI()
 
 	if allSteps == True:
@@ -335,15 +318,6 @@ def main():
 		surf_meas()
 		vol_meas()
 		GI() 
-
-#if os.path.exist_ok
-# extrac()
-# surf_reg()
-# resampling()
-# surf_meas()
-# vol_meas()
-# GI() 
-
 
 if __name__ == '__main__':
     main()
