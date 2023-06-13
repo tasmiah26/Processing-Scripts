@@ -15,7 +15,7 @@ The scripts can only be accessed and used on an FNNDSC machine after setting up 
 Current version is  v2.0
 
 The path to the file is:
-/neuro/labs/grantlab/research/MRI_processing/tasmiah/script_1/auto_segmentation_v2.0.py
+``/neuro/labs/grantlab/research/MRI_processing/tasmiah/script_1/auto_segmentation_v2.0.py``
 
 ### **Usage**
 This script can be used for initial processing of raw MRI scans using the --all flag.
@@ -46,8 +46,8 @@ Flag         | Description
 Current version is  v3.2
 
 The path to the file is:
-/neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.2.py
-
+`/neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.2.py
+`
 ### **Usage**
 ``` 
 python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.2.py --input_fol ${file} --all 
