@@ -5,7 +5,7 @@ This repository contains python scripts that automate the fetal MRI processing p
 
 The pipeline is divided into 2 parts: 
 
-1) The first script performs the steps from masking the ROI to automatic segmentation of the inner/outer coritcal plates
+1) The first script performs the steps from masking the ROI (brain) to automatic segmentation of the inner/outer coritcal plates
 2) The second script is for surface and volume extraction. It should be used after performing any manual corrections needed for masking, reconstruction, and segmentation
 
 The scripts can only be accessed and used on an FNNDSC machine after setting up the environment. Both scripts are executable so they can be used by calling the path and using the necessary flags. 
