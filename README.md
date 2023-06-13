@@ -30,7 +30,7 @@ Flag options (replace “--all”) for each step to run individually or to start
 
 Flag         | Description
 ------------ | -------------
---masking | creates masks and moves them into a folder labeled "masks" and puts the masked regions inside a folder labeled "brain". Also creates a  "verify" folder to store .png files of the masked ROIs 
+--masking | creates masks and moves them into a folder labeled "masks" and puts the masked regions inside a folder labeled "brain". Also creates a  "verify" folder to store .png files of the masked ROIs [code](https://github.com/sofia-urosa/brain-masking)
 --remask or --from_remask| use after manual mask correction, to create a new brain folder with corrected regions
 --NUC or --from_NUC | performs non-uniformity correction and puts them inside a folder "nuc"
 --QA or --from_QA | creates a folder "Best_Images_Crop" with the highest quality images and the quality evaluation is exported to quality_assessment.csv 
