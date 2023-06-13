@@ -38,7 +38,7 @@ Flag         | Description
 --alignment or --from_alignment | reorients the reconstructed images inside the temp_recon_#/alignment_temp folder. Files necessary for segmentation and surface extraction steps are created and stored inside temp_recon_#/ (recon* files)
 --segment | performs automatic segmentation **
 
-**automatic segmentation has another flag option that can be used if the default resulted poorly: --segmentation_WO_att. This will overwrite the recon_to31_nuc_deep_agg.nii file, so be sure to save the previous segmentation by changing the name
+**automatic segmentation has another flag option that can be used if the default resulted poorly: ```--segmentation_WO_att```. This will overwrite the recon_to31_nuc_deep_agg.nii file, so be sure to save the previous segmentation by changing the name
 
 
 ## **Script 2- surface_processing**
