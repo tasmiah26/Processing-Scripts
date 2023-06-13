@@ -24,9 +24,9 @@ This script can be used for initial processing of raw MRI scans using the --all 
 python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_1/auto_segmentation_v2.0.py --input_fol ${file} --all 
 ```
 
---input_fol is a required argument and should be given the path to the folder containing the MRI scans, shown as the variable ${file} above. 
+`--input_fol` is a required argument and should be given the path to the folder containing the MRI scans, shown as the variable "file" above. 
 
-Flag options (replace “--all”) for each step to run individually or to start at a particular step and continue are in the table below.  The --help or -h flag will display information about each flag:
+Flag options (replace “`--all`”) for each step to run individually or to start at a particular step and continue are in the table below.  The `--help` or `-h` flag will display information about each flag:
 
 Flag         | Description
 ------------ | -------------
@@ -52,7 +52,7 @@ The path to the file is:
 ``` 
 python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.2.py --input_fol ${file} --all 
 ```
-Flag options (replace “--all”) for each step to run individually or to start at a particular step and continue are shown in the table below. The --help or -h flag will display the information about each flag:
+Flag options for each step to run individually or to start at a particular step and continue are shown in the table below. The `--help `or `-h` flag will display the information about each flag:
 
 Flag         | Description
 ------------ | -------------
