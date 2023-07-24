@@ -158,35 +158,45 @@ def surf_meas():
 
 #volume measures
 def vol_meas():			
-	os.system('echo `fslstats '+input_fol+'/recon_segmentation/segmentation_to31_final.nii -l 159 -u 161 -V| cut -d" " -f2` > '+input_fol+'/temp/temp.txt;')
-	os.system('echo `fslstats '+input_fol+'/recon_segmentation/segmentation_to31_final.nii -l 160 -u 162 -V| cut -d" " -f2` >> '+input_fol+'/temp/temp.txt;')
-	os.system('echo `fslstats '+input_fol+'/recon_segmentation/segmentation_to31_final.nii -l 41 -u 43 -V| cut -d" " -f2` >> '+input_fol+'/temp/temp.txt;')
-	os.system('echo `fslstats '+input_fol+'/recon_segmentation/segmentation_to31_final.nii -l 0 -u 2 -V| cut -d" "   -f2` >> '+input_fol+'/temp/temp.txt;')
-			
-	os.system('echo `xfm2param '+input_fol+'/recon_segmentation/recon_native.xfm | grep scale | cut -d" " -f11` > '+input_fol+'/temp/temp2.txt;')
-	os.system('echo `xfm2param '+input_fol+'/recon_segmentation/recon_native.xfm | grep scale | cut -d" " -f15` >> '+input_fol+'/temp/temp2.txt;')
-	os.system('echo `xfm2param '+input_fol+'/recon_segmentation/recon_native.xfm | grep scale | cut -d" " -f19` >> '+input_fol+'/temp/temp2.txt;')
+	seg_final= input_fol+'/recon_segmentation/segmentation_to31_final.nii'
+	final_nii= nib.load(seg_final)
+	img_data= final_nii.get_fdata()
 
+	vox_inRange_1 = ((img_data > 159) & (img_data < 161)).sum()
+	vox_inRange_2 = ((img_data > 160) & (img_data < 162)).sum()
+	vox_inRange_3 = ((img_data > 41) & (img_data < 43)).sum()
+	vox_inRange_4 = ((img_data > 0) & (img_data < 2)).sum()
+
+	print("num voxels:", vox_inRange_1, vox_inRange_2, vox_inRange_3, vox_inRange_4)
+
+	voxel_sizes = np.abs(final_nii.header.get_zooms())
+	print("vox size:", voxel_sizes)
+    
+	vol1 = vox_inRange_1 * np.prod(voxel_sizes)
+	vol2 = vox_inRange_2 * np.prod(voxel_sizes)
+	vol3 = vox_inRange_3 * np.prod(voxel_sizes)
+	vol4 = vox_inRange_4 * np.prod(voxel_sizes)
+	
+	xfm_path = input_fol+'/recon_segmentation/recon_native.xfm'
+			
+	os.system('xfm2param '+input_fol+'/recon_segmentation/recon_native.xfm | grep scale | cut -d" " -f11 > '+input_fol+'/temp/temp2.txt;')
+	os.system('xfm2param '+input_fol+'/recon_segmentation/recon_native.xfm | grep scale | cut -d" " -f15 >> '+input_fol+'/temp/temp2.txt;')
+	os.system('xfm2param '+input_fol+'/recon_segmentation/recon_native.xfm | grep scale | cut -d" " -f19 >> '+input_fol+'/temp/temp2.txt;')
+	
 	with open(input_fol+'/temp/temp2.txt') as temp2:
 		scale_temp = [0,0,0]
 		scale_temp=temp2.readlines()
+
 	scale_av = float(scale_temp[0]) * float(scale_temp[1]) * float(scale_temp[2])
 	print(scale_av)
-	
-	temp2.close
-	
-	with open(input_fol+'/temp/temp.txt') as V:
-		V_temp = [0,0,0,0]
-		V_temp=V.readlines()
-		print(V_temp)
-		V1_scale = str(float(V_temp[0]) * scale_av)
-		V2_scale = str(float(V_temp[1]) * scale_av)
-		V3_scale = str(float(V_temp[2]) * scale_av)
-		V4_scale = str(float(V_temp[3]) * scale_av)
 
-	V.close
+	v1xScale = (vol1 * scale_av)
+	v2xScale = (vol2 * scale_av)
+	v3xScale = (vol3 * scale_av)
+	v4xScale = (vol4 * scale_av)
 
-	os.system('echo '+V1_scale+' '+V2_scale+' '+V3_scale+' '+V4_scale+'  > '+input_fol+'/recon_segmentation/Volume_measures.txt;')
+	with open(input_fol+'/recon_segmentation/Volume_measures.txt', "w") as file:
+		file.write(str(v1xScale) + "\n" + str(v2xScale)+ "\n" + str(v3xScale) + "\n" +str(v4xScale)  )
 
 #gyrification index
 def GI():
