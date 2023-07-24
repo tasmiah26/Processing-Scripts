@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-#v3.2 - update to surface extraction: subsampling and Taubin smoothing (adapt_object_mesh) added
+#v3.3 - update to volume measures function (no longer uses echo)
 
 #surface extraction after segmentation_to31_final.nii created 
 
