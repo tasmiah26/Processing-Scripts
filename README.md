@@ -46,7 +46,7 @@ Flag         | Description
 Current version is  v3.3
 
 The path to the file is:
-`/neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.2.py
+`/neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.3.py
 `
 ### **Usage**
 ``` 
