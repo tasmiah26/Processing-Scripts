@@ -50,7 +50,7 @@ The path to the file is:
 `
 ### **Usage**
 ``` 
-python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.2.py --input_fol ${file} --all 
+python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.3.py --input_fol ${file} --all 
 ```
 Flag options for each step to run individually or to start at a particular step and continue are shown in the table below. The `--help `or `-h` flag will display the information about each flag:
 
