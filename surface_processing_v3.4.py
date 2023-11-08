@@ -344,10 +344,15 @@ def main():
 		surf_meas() 
 	if V_meas == True:
 		vol_meas()
-		
 	if gi == True:
 		GI()
-
+	if all_young == True:
+		extraction_woSubsample()
+		surf_reg()
+		resampling()
+		surf_meas()
+		vol_meas()
+		GI()
 	if allSteps == True:
 		extrac()
 		surf_reg()
