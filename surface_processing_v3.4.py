@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
 
-#v3.3 - update to volume measures function (no longer uses echo)
+#v3.4 - "--all_young" flag added to process fetuses younger than 28.5 GA
 
 #surface extraction after segmentation_to31_final.nii created 
-
+'''
+TO DO:
+- use Tafoya's flag option for extraction WO subsample
+'''
 import os
 import sys
 import math
@@ -19,6 +22,11 @@ parser.add_argument('--input_fol',
 
 parser.add_argument('--extraction', 
     dest='extrac', 
+	action='store_true',
+    help='creates minc files, performs surface extract singularity, and transforms input objects with the corresponding .xfm transform')
+
+parser.add_argument('--all_young', 
+    dest='all_young', 
 	action='store_true',
     help='creates minc files, performs surface extract singularity, and transforms input objects with the corresponding .xfm transform')
 
@@ -59,6 +67,24 @@ parser.add_argument('--all',
 
 
 #surface extraction
+def extraction_woSubsample():		
+	os.system('nii2mnc '+input_fol+'/recon_segmentation/segmentation_to31_final.nii '+input_fol+'/temp/segmentation_to31_final.mnc;')
+	os.system('mincmath -clobber -eq -const 160  '+input_fol+'/temp/segmentation_to31_final.mnc '+input_fol+'/temp/inner_left.mnc;'
+				'mincmath -clobber -eq -const 161  '+input_fol+'/temp/segmentation_to31_final.mnc '+input_fol+'/temp/inner_right.mnc;')
+		
+	os.system('singularity exec docker://fnndsc/pl-fetal-cp-surface-extract extract_cp --adapt_object_mesh 0,100,0,0 --mincmorph-iterations 1 '+input_fol+'/temp/ '+input_fol+'/temp/;')
+	
+	os.system('adapt_object_mesh '+input_fol+'/temp/inner_left._81920.obj '+input_fol+'/surfaces/lh.smoothwm.to31.obj 0 100 0 0;')
+	os.system('adapt_object_mesh '+input_fol+'/temp/inner_right._81920.obj '+input_fol+'/surfaces/rh.smoothwm.to31.obj 0 100 0 0;')
+
+	os.system('/neuro/labs/grantlab/research/HyukJin_MRI/code/obj2asc '+input_fol+'/surfaces/lh.smoothwm.to31.obj '+input_fol+'/surfaces/lh.smoothwm.to31.asc;')
+	os.system('/neuro/labs/grantlab/research/HyukJin_MRI/code/obj2asc '+input_fol+'/surfaces/rh.smoothwm.to31.obj '+input_fol+'/surfaces/rh.smoothwm.to31.asc;')
+
+	os.system('transform_objects '+input_fol+'/surfaces/lh.smoothwm.to31.obj '+input_fol+'/recon_segmentation//recon_native.xfm '+input_fol+'/surfaces/lh.smoothwm.native.obj;')
+	os.system('transform_objects '+input_fol+'/surfaces/rh.smoothwm.to31.obj '+input_fol+'/recon_segmentation//recon_native.xfm '+input_fol+'/surfaces/rh.smoothwm.native.obj;')
+	os.system('transform_objects '+input_fol+'/surfaces/lh.smoothwm.to31.obj /neuro/labs/grantlab/research/HyukJin_MRI/Fetal_template/xfm/template-31toMNI.xfm '+input_fol+'/surfaces/lh.smoothwm.mni.obj;')
+	os.system('transform_objects '+input_fol+'/surfaces/rh.smoothwm.to31.obj /neuro/labs/grantlab/research/HyukJin_MRI/Fetal_template/xfm/template-31toMNI.xfm '+input_fol+'/surfaces/rh.smoothwm.mni.obj;')
+
 def extrac():		
 	os.system('nii2mnc '+input_fol+'/recon_segmentation/segmentation_to31_final.nii '+input_fol+'/temp/segmentation_to31_final.mnc;')
 	os.system('mincmath -clobber -eq -const 160  '+input_fol+'/temp/segmentation_to31_final.mnc '+input_fol+'/temp/inner_left.mnc;'
@@ -276,7 +302,8 @@ def main():
 	V_meas = args.vol_meas
 	gi = args.GI
 	allSteps = args.all
-	
+	all_young = args.all_young
+
 
 	rnum=("1","2","3")
 	#creates recon_native.xfm if not already inside appropriate folder(s) 
