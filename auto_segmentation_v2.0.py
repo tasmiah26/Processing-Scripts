@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 
 #folder: /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_1/
-#v 2.0- updated folder structure 
+#v 2.1- new path for alignment templates 
 
-### add error messages
-
+'''
+TO DO:
+1. add error messages
+2. change recon step/ add nesvor tool 
+3. channge alignment templates to 0.5mm
+'''
     
 import numpy as np
 import math
@@ -50,24 +54,29 @@ parser.add_argument('--recon',
 	action='store_true',
     help='performs 3 reconstructions using different targets')  ##make # of recons a flag option; default to 3 
 
-parser.add_argument('--alignment', 
+parser.add_argument('--alignment', '--align', 
     dest='align',
     # nargs='+',
     # default='1','2','3',
 	action='store_true',
     help='aligns the reconstructed images')
 
-parser.add_argument('--segment', 
+parser.add_argument('--segment',  '--segmentation',
     dest='auto_seg',
 	action='store_true',
     help='automatically segments the reconstructed images')
+
+parser.add_argument('--segment_WO_att', 
+    dest='auto_seg_No_Att',
+	action='store_true',
+    help='automatically segments the reconstructed images, without using the attention module. Overwrites recon_to31_nuc_deep_agg.nii file')
 
 parser.add_argument('--all', 
     dest='all',
 	action='store_true',
     help='does all steps from masking')
 
-parser.add_argument('--from_remasking', 
+parser.add_argument('--from_remask', 
     dest='remask__',
 	action='store_true',
     help='extracts corrected brain region and does following steps')
@@ -91,6 +100,11 @@ parser.add_argument('--from_alignment',
     dest='align__',
 	action='store_true',
     help='alignment to resize')
+
+parser.add_argument('--reprocess', 
+  dest='rm',
+	action='store_true',
+  help='removes files and folders except masks/ and raw/')
 
 def verify():
     img_list = np.asarray(sorted(glob.glob(input_fol+'/verify/*_brain.nii*')))
@@ -303,15 +317,15 @@ def align():
         if not os.path.exists(input_fol+'/temp_recon_'+r+'/alignment_temp/recon.nii'):
             os.system('cp '+input_fol+'/temp_recon_'+r+'/recon.nii '+input_fol+'/temp_recon_'+r+'/alignment_temp/recon.nii')
     
-        os.system('cp -R /neuro/labs/grantlab/research/HyukJin_MRI/templates_for_alginment/ ~')
+        os.system('cp -R /neuro/users/mri.team/fetal_mri/templates_for_alginment/original ~')
 
     def alignment_func(temp_recon_a):
         a_temp=("23", "24", "25", "26", "27", "28", "29", "30", "31", "32")
         for t in a_temp:
             os.system(\
-                'flirt -in /neuro/labs/grantlab/research/HyukJin_MRI/templates_for_alginment/template-'+t+'/template-'+t+'.nii -ref '+temp_recon_a+'/recon.nii \
+                'flirt -in /neuro/users/mri.team/fetal_mri/templates_for_alginment/original/template-'+t+'/template-'+t+'.nii -ref '+temp_recon_a+'/recon.nii \
                 -out '+temp_recon_a+'/Temp-Recon-7dof-'+t+'.nii -omat '+temp_recon_a+'/Temp-Recon-7dof-'+t+'.xfm -dof 7  -searchrx -180 180 -searchry -180 180 -searchrz -180 180;')
-            os.system('flirt -in /neuro/labs/grantlab/research/HyukJin_MRI/templates_for_alginment/template-'+t+'/csf-'+t+'.nii -ref '+temp_recon_a+'/recon.nii \
+            os.system('flirt -in /neuro/users/mri.team/fetal_mri/templates_for_alginment/original/template-'+t+'/csf-'+t+'.nii -ref '+temp_recon_a+'/recon.nii \
                 -out '+temp_recon_a+'/csf-aligned'+t+'.nii -init '+temp_recon_a+'/Temp-Recon-7dof-'+t+'.xfm -applyxfm;')
 
         recon = nib.load(temp_recon_a+'/recon.nii') # Load reconstruction image 
@@ -452,7 +466,7 @@ def align():
         os.system('convert_xfm -omat '+temp_recon_a+'/InvAligned-'+temp+'.xfm -inverse '+temp_recon_a+'/Temp-Recon-7dof-'+temp+'.xfm')
         os.system('convert_xfm -omat '+temp_recon_a+'/recon_to31.xfm -concat /neuro/labs/grantlab/research/HyukJin_MRI/templates_for_alginment/template-'+temp+'/template-'+temp+'to31.xfm '+temp_recon_a+'/InvAligned-'+temp+'.xfm')
         
-        os.system('flirt -in '+temp_recon_a+'/recon.nii -ref /neuro/labs/grantlab/research/HyukJin_MRI/templates_for_alginment/template-31/template-31.nii \
+        os.system('flirt -in '+temp_recon_a+'/recon.nii -ref /neuro/users/mri.team/fetal_mri/templates_for_alginment/original/template-31/template-31.nii \
                     -out '+temp_recon_a+'/recon_to31.nii.gz -init '+temp_recon_a+'/recon_to31.xfm -applyxfm')
     
         os.system('gunzip '+temp_recon_a+'/recon_to31.nii.gz')
@@ -478,8 +492,12 @@ def auto_seg():
     os.system('singularity run --no-home -B '+input_fol+'/temp_recon_1/:/data --nv /neuro/labs/grantlab/research/MRI_processing/sungmin.you/MRI_SIF/fetal_cp_seg_att.sif recon_to31_nuc.nii . 1;')
     os.system('singularity run --no-home -B '+input_fol+'/temp_recon_2/:/data --nv /neuro/labs/grantlab/research/MRI_processing/sungmin.you/MRI_SIF/fetal_cp_seg_att.sif recon_to31_nuc.nii . 1;')
     os.system('singularity run --no-home -B '+input_fol+'/temp_recon_3/:/data --nv /neuro/labs/grantlab/research/MRI_processing/sungmin.you/MRI_SIF/fetal_cp_seg_att.sif recon_to31_nuc.nii . 1;')
-                    # add ((optional)) seg_.sif version for attention model
 
+# add flag option for seg_.sif without attention model:
+def auto_seg_No_Att():
+    os.system('singularity run --no-home -B '+input_fol+'/temp_recon_1/:/data --nv /neuro/labs/grantlab/research/MRI_processing/sungmin.you/MRI_SIF/fetal_cp_seg.sif recon_to31_nuc.nii . 1;')
+    os.system('singularity run --no-home -B '+input_fol+'/temp_recon_2/:/data --nv /neuro/labs/grantlab/research/MRI_processing/sungmin.you/MRI_SIF/fetal_cp_seg.sif recon_to31_nuc.nii . 1;')
+    os.system('singularity run --no-home -B '+input_fol+'/temp_recon_3/:/data --nv /neuro/labs/grantlab/research/MRI_processing/sungmin.you/MRI_SIF/fetal_cp_seg.sif recon_to31_nuc.nii . 1;')
 
 def main():
     args = parser.parse_args()
@@ -506,6 +524,7 @@ def main():
     reconstruction = args.recon
     alignment = args.align
     seg = args.auto_seg
+    seg_wO_att =args.auto_seg_No_Att 
     from_remask = args.remask__
     fromNUC = args.nuc__
     fromQA = args.qa__
