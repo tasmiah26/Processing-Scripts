@@ -12,16 +12,16 @@ The scripts can only be accessed and used on an FNNDSC machine after setting up 
 
 ## **Script 1- auto_segmentation**
 
-Current version is  v2.0
+Current version is  v2.1
 
 The path to the file is:
-``/neuro/labs/grantlab/research/MRI_processing/tasmiah/script_1/auto_segmentation_v2.0.py``
+``/neuro/labs/grantlab/research/MRI_processing/tasmiah/script_1/auto_segmentation_v2.1.py``
 
 ### **Usage**
 This script can be used for initial processing of raw MRI scans using the --all flag.
 
 ``` 
-python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_1/auto_segmentation_v2.0.py --input_fol ${file} --all 
+python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_1/auto_segmentation_v2.1.py --input_fol ${file} --all 
 ```
 
 `--input_fol` is a required argument and should be given the path to the folder containing the MRI scans, shown as the variable "file" above. 
@@ -43,14 +43,19 @@ Flag         | Description
 
 ## **Script 2- surface_processing**
 
-Current version is  v3.3
+Current version is  v3.4
 
 The path to the file is:
-`/neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.3.py
+`/neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.4.py
 `
 ### **Usage**
 ``` 
-python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.3.py --input_fol ${file} --all 
+python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.4.py --input_fol ${file} --all
+```
+For subjects that are younger than 28.5w use:
+```
+python3 /neuro/labs/grantlab/research/MRI_processing/tasmiah/script_2/surface_processing_v3.4.py --input_fol ${file} --all_young
+
 ```
 Flag options for each step to run individually or to start at a particular step and continue are shown in the table below. The `--help `or `-h` flag will display the information about each flag:
 
